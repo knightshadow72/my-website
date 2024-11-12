@@ -1,0 +1,6 @@
+services:
+  web:
+    image: brianc96/mywebsite:latest
+    container_name: myweb
+    ports:
+      - "8080:5000"

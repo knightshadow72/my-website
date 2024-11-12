@@ -1,0 +1,31 @@
+##
+# 1. Spin up VPC using this guide https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html#_public_and_private_subnets
+# 2. and update the private and public subnet below
+# 3. eksctl create cluster -f ./eks/cluster.yaml
+##
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mywebsite
+  region: ap-southeast-2
+
+vpc:
+  subnets:
+    private:
+      ap-southeast-2a: { id: subnet-0e81d28aab897b421 }
+      ap-southeast-2b: { id: subnet-01098a9a36ffadde0 }
+    public:
+      ap-southeast-2a: {id: subnet-0c5c2dd5e7e688795 }
+      ap-southeast-2b: {id: subnet-0d2080d082fa75d0b }
+
+
+managedNodeGroups:
+  - name: managed-ng-1-workers
+    labels: { role: managed-workers }
+    instanceType: t2.small
+    minSize: 1
+    maxSize: 2
+    desiredCapacity: 1
+    privateNetworking: true
